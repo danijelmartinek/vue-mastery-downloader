@@ -15,13 +15,9 @@ If you get error *(node:20857) UnhandledPromiseRejectionWarning: Error: Browser 
 -> for Linux run "sudo npm install puppeteer --unsafe-perm=true --allow-root"
 -> for Windows uncomment "executablePath" in main() function in index.js (not tested)
 
-&nbsp;
-
 ##### MADE WITH THESE LIBRARIES:
 - puppeteer
 - axios
 - fs-extra
-
-&nbsp;
 
 ##### Licence: MIT
