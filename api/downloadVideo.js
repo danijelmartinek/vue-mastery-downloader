@@ -2,9 +2,9 @@ const Fs = require('fs');
 const Path = require('path');
 const ProgressBar = require('progress')
 
-const Axios = require('../node_modules2/axios')
+const Axios = require('axios')
 
-const downloadVideo = async (url, savePath) => {  
+const downloadVideo = async (url, savePath, dotLoader) => {  
 
     const { data, headers } = await Axios({
         url,
