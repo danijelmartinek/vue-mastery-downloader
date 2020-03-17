@@ -1,6 +1,6 @@
 const auth = async (page, email, password) => {
-    await page.click('button[class="button primary -small"]');
-    await page.type('button[class="button primary -small"]', 'Login')
+    await page.click('button[class="button inverted"]');
+    await page.click('button[class="button link"]');
 
     await page.focus('input[placeholder="Account Email"]');
     await page.keyboard.type(email)
