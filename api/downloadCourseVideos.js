@@ -75,7 +75,14 @@ const downloadCourseVideos = async (page, saveDir, videoFormat, quality, playlis
 
         await page.goBack();
         await delay(5000);
-        await page.click('button[class="next"]')
+        try {
+            await Promise.all([
+                page.waitForNavigation(),
+                page.click('div.list-item.active + div.list-item'),
+              ]);
+        } catch (error) {
+            console.log('Last lesson.\n\n');
+        }
     }
 }
 
