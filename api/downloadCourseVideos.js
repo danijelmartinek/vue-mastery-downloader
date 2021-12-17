@@ -35,7 +35,8 @@ const downloadCourseVideos = async (page, saveDir, videoFormat, quality, playlis
         );
         title = await title.replace(
             "/",
-            "-"
+            "-",
+            "?"
         );
 
         if(title === prevVideoTitle) {
@@ -56,14 +57,14 @@ const downloadCourseVideos = async (page, saveDir, videoFormat, quality, playlis
 
         await page.goto('view-source:' + iframeSrc, { waitUntil: 'networkidle0' });
         await page.goto('view-source:' + iframeSrc, { waitUntil: 'networkidle0' });
-        
+
         const content = await page.evaluate(
             () => Array.from(document.body.querySelectorAll('td.line-content'), txt => txt.textContent)[0]
         );
 
         let newString = content.split(`progressive":[`)[1];
         let finString = newString.split(']},"lang":"en","sentry":')[0];
-        
+
         let videos = await eval(`[${finString}]`)
         let selectedVideo = await videos.find(vid => vid.quality === quality);
 
