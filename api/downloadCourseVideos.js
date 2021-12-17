@@ -30,13 +30,16 @@ const downloadCourseVideos = async (page, saveDir, videoFormat, quality, playlis
         await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
         await delay(5000);
 
-        let title = await page.evaluate(  
+        let title = await page.evaluate(
             () => Array.from(document.body.querySelectorAll('h1.title'), txt => txt.textContent)[0]
         );
         title = await title.replace(
             "/",
             "-"
         );
+        if (title.includes("?")) {
+            title = title.replace("?", " ");
+        }
 
         if(title === prevVideoTitle) {
             console.log("\x1b[31m%s\x1b[0m", 'More videos not available - This course download aborted. \n Reason: Either you have no access to the following videos or videos have not yet been published. \n');
@@ -56,14 +59,14 @@ const downloadCourseVideos = async (page, saveDir, videoFormat, quality, playlis
 
         await page.goto('view-source:' + iframeSrc, { waitUntil: 'networkidle0' });
         await page.goto('view-source:' + iframeSrc, { waitUntil: 'networkidle0' });
-        
+
         const content = await page.evaluate(
             () => Array.from(document.body.querySelectorAll('td.line-content'), txt => txt.textContent)[0]
         );
 
         let newString = content.split(`progressive":[`)[1];
         let finString = newString.split(']},"lang":"en","sentry":')[0];
-        
+
         let videos = await eval(`[${finString}]`)
         let selectedVideo = await videos.find(vid => vid.quality === quality);
 
@@ -75,7 +78,14 @@ const downloadCourseVideos = async (page, saveDir, videoFormat, quality, playlis
 
         await page.goBack();
         await delay(5000);
-        await page.click('button[class="next"]')
+        try {
+            await Promise.all([
+                page.waitForNavigation(),
+                page.click('div.list-item.active + div.list-item'),
+            ]);
+        } catch (error) {
+            console.log('Last lesson.\n\n');
+        }
     }
 }
 
