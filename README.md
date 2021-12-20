@@ -1,5 +1,9 @@
 # Vue Mastery Downloader 
 
+# Forked from original https://github.com/danijelmartinek/vue-mastery-downloader
+. Now it supports also scraping text for each lesson which is stored in HTML file in the same directory as the video
+
+
 ## CAUTION: This script was made just for fun as a weekend project without intent to falsify videos or doing any illegal activities related to Vue Mastery videos. Use of downloaded videos is strictly prohibited. If you want to watch them, go to Vue Mastery official site!  
 
 ## HOW TO USE:
